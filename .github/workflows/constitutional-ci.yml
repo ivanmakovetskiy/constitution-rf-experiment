@@ -1,0 +1,36 @@
+name: Constitutional Entrenchment CI (Articles 134–137)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-standing-art-134:
+    name: "Art. 134: Verify Subject of Constitutional Initiative"
+    runs-on: constitutional-court-runner
+    steps:
+      - name: Check Author Standing
+        run: |
+          # Allowed initiators: President RF, Federation Council, State Duma,
+          # Government RF, Regional Legislatures, or >=1/5 Senators / Deputies.
+          echo "Checking initiator credentials under Article 134..."
+
+  protected-kernel-guard-art-135:
+    name: "Art. 135: Protected Kernel Guard (Chapters 1, 2, 9)"
+    runs-on: constitutional-court-runner
+    steps:
+      - name: Block Edits to Chapters 1, 2, and 9 by Federal Assembly
+        run: |
+          if git diff --name-only origin/main...HEAD | grep -E 'chapters/(01|02|09)-'; then
+            echo "FATAL [Art. 135]: Federal Assembly cannot amend Chapters 1, 2, or 9."
+            echo "DependencyError: FCL 'On the Constitutional Assembly' not found."
+            exit 1
+          fi
+
+  supermajority-quorum-art-136:
+    name: "Art. 136: Supermajority & Regional Ratification Check (Chapters 3–8)"
+    runs-on: federal-assembly-runner
+    steps:
+      - name: Verify Votes (Duma >= 300/450, Federation Council >= 3/4, Regions >= 2/3)
+        run: |
+          echo "Verifying bicameral supermajority and regional ratification certificates..."

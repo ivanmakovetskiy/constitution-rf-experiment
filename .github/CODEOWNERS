@@ -1,0 +1,30 @@
+# ==============================================================================
+# CONSTITUTION OF THE RUSSIAN FEDERATION — DIGITAL LAW CODEOWNERS (ART. 134–137)
+# ==============================================================================
+# This file encodes the constitutional entrenchment hierarchy of Chapter 9
+# (Articles 134–137) as Git path ownership and mandatory review gates.
+
+# 1. PROTECTED CONSTITUTIONAL KERNEL (Article 135)
+# Cannot be amended by the Federal Assembly. Any modification requires convening
+# the Constitutional Assembly (Конституционное Собрание) under a Federal
+# Constitutional Law (not enacted since 1993) + All-Russian Referendum (>=50%
+# turnout, >50% approval).
+/chapters/00-preamble.md                  @constitutional-assembly @all-russian-referendum
+/chapters/01-fundamentals.md              @constitutional-assembly @all-russian-referendum
+/chapters/02-rights-and-freedoms.md       @constitutional-assembly @all-russian-referendum
+/chapters/09-amendments-and-revision.md   @constitutional-assembly @all-russian-referendum
+
+# 2. SUBSTANTIVE INSTITUTIONAL CHAPTERS (Article 136)
+# Amended via a Law of the RF on Amendment to the Constitution (Закон РФ о поправке
+# к Конституции РФ): >=2/3 State Duma + >=3/4 Federation Council + >=2/3 Regional
+# Legislatures within 1 year + Presidential signature.
+/chapters/03-federal-structure.md         @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+/chapters/04-president.md                 @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+/chapters/05-federal-assembly.md          @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+/chapters/06-government.md                @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+/chapters/07-judiciary-and-prosecution.md @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+/chapters/08-local-self-government.md     @state-duma-2-3 @federation-council-3-4 @regional-legislatures-2-3 @president-rf
+
+# 3. ARTICLE 65 FAST-TRACK EXCEPTION (Article 137)
+# - Art. 137(1): Admission/merger of constituent entities -> Federal Constitutional Law (ФКЗ)
+# - Art. 137(2): Renaming of constituent entity -> Presidential Decree (Указ Президента РФ)
