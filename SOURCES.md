@@ -24,12 +24,6 @@ Retrieval: 21 October 2026. Secondary transcriptions; primary-source verificatio
 
 - https://constitution.kremlin.ru/ — presidential constitutional-text site
 
-## International status
-
-- https://docs.un.org/en/A/RES/68/262
-
-- https://docs.un.org/en/A/RES/ES-11/4
-
 ## Raw-file SHA-256
 
 - `1996_01_09_ukaz_20.txt`: `3f8f6b113898bc06ef8eafa51c7c49ff321471412924fc1be9bd983b733351e4`

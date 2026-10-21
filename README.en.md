@@ -35,10 +35,6 @@ Transcriptions were retrieved from Russian Wikisource on 21 October 2026. Files 
 
 See `SOURCES.md` for URLs and `METHODOLOGY.md` for review limits. Primary-source and legislative-dossier verification is needed before using this as a legal database.
 
-## Territorial status
-
-Article 65 insertions describe the Russian domestic text only. They do not endorse Russia's territorial claims. Crimea, Sevastopol, and the four Ukrainian regions claimed in 2022 are internationally recognized as parts of Ukraine. Consult UN General Assembly resolutions 68/262 and ES-11/4, linked in SOURCES.md.
-
 ## Verification
 
 Run `python3 tools/verify.py`. This checks branch/merge counts and that stored article diffs match actual Git chapter changes. These are engineering consistency checks, **not legal certification**.
