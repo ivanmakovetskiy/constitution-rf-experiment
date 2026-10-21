@@ -22,4 +22,4 @@ No executable constitutional-review workflow or real institutional CODEOWNERS pe
 
 ## Reproduction boundaries
 
-Raw transcriptions and Git snapshots are preserved, and the viewer is built from stored PR metadata. This prototype does not include a fully source-to-Git reproducible legal parser; human reconstruction choices remain part of the dataset. Metadata generated in 2026 is committed after the synthetic legal replay, not presented as historical evidence.
+Raw transcriptions and Git snapshots are preserved, and PR metadata is preserved as JSON. This prototype does not include a fully source-to-Git reproducible legal parser; human reconstruction choices remain part of the dataset. Metadata generated in 2026 is committed after the synthetic legal replay, not presented as historical evidence.

@@ -1,49 +1,118 @@
-# Constitution as code — Russian Federation
+# Конституция Российской Федерации как Git-репозиторий
 
-Experimental, source-linked reconstruction of post-1993 constitutional text changes. Russian legal text; English research metadata. **Not a certified legal edition or a verified complete original-author history.**
+Эксперимент на пересечении конституционного права и цифрового права: изменения текста Конституции после 1993 года представлены как ветки и слияния в Git, а отдельные акты — как реконструированные pull request.
 
-## Explore
+**Это исследовательская реконструкция, а не официальная редакция Конституции и не подтверждённая история авторства каждой поправки.** Исторические лица не создавали эти коммиты. HTML-просмотрщик удалён; работа с историей ведётся средствами Git.
 
-Open `viewer.html` in a browser (fully offline), or run:
+[English README](README.en.md)
 
-```sh
-python3 -m http.server 8000 --bind 0.0.0.0
-# browse /viewer.html
+## Что включено
+
+- Реконструированная исходная редакция 1993 года.
+- 20 веток изменений и 20 коммитов слияния без fast-forward.
+- Метки редакций и описания изменений в `pull_requests/`.
+- Текст Конституции на русском языке; метаданные изменений — на английском.
+- Сохранённые исходные транскрипции и описание ограничений исследования.
+
+Представлены пять указов о переименовании субъектов, пять актов об объединении субъектов, пять законов о поправках по статье 136, а также один акт 2014 года и четыре акта 2022 года о включении территорий в российский конституционный текст.
+
+Последние представленные изменения относятся к 2022 году. **Полнота истории после 2022 года, в том числе по состоянию на октябрь 2026 года, не проверена.** Отклонённые инициативы и все промежуточные редакции законопроектов не включены.
+
+## Как открыть репозиторий
+
+Распакуйте ZIP вместе с каталогом `.git` либо клонируйте Git bundle:
+
+```bash
+git clone constitution-rf.bundle constitution-rf
+cd constitution-rf
 ```
 
-```sh
+Посмотреть историю всех веток:
+
+```bash
 git log --graph --oneline --all
+```
+
+Посмотреть пакет поправок 2020 года:
+
+```bash
 git show amendment/16-2020-07-04
 git diff amendment/16-2020-07-04^ amendment/16-2020-07-04 -- chapters/
-git checkout v1.0.0-1993
 ```
 
-20 amendment branches, 20 no-fast-forward merge commits, edition tags, and Markdown PR descriptions. These are **local reconstructed PRs**, not GitHub-hosted pull requests. No remote repository has been created.
+Открыть исходную реконструированную редакцию:
 
-## Scope and status
+```bash
+git switch --detach v1.0.0-1993
+# Вернуться к последнему состоянию:
+git switch main
+```
 
-The replay covers the 20 instruments represented here: five renaming decrees, five regional mergers, five Article 136 amendment laws (including the entire 2020 package), and five territorial-insertion instruments (one in 2014 and four in 2022). The final represented legal changes date to 2022. **No comprehensive search for changes through 21 October 2026 has been completed.** Unsuccessful bills and intermediate bill drafts are not represented.
+Ветки и описания PR существуют локально. Репозиторий не опубликован на удалённом сервере; настоящие PR на GitHub не создавались.
 
-The 2020 package is one PR with article-level diffs, not a fictional sequence of separately enacted changes. Four 2022 instruments are ordered by law number for inspection; that ordering is analytical, not proof of four successive published constitutional editions.
+## Структура
 
-## Attribution and integrity
+| Путь | Содержание |
+| --- | --- |
+| `CONSTITUTION.md` | Сводный текст Конституции |
+| `chapters/` | Тот же текст по главам, включая преамбулу и переходные положения |
+| `pull_requests/` | Описания 20 реконструированных PR |
+| `data/prs.json` | Метаданные, ссылки на коммиты, тексты до и после изменения |
+| `data/baseline.json` | Данные реконструированной исходной редакции |
+| `sources/` | Сохранённые исходные транскрипции |
+| `SOURCES.md` | Источники, ссылки и контрольные суммы |
+| `METHODOLOGY.md` | Методология и задачи дальнейшей проверки |
+| `tools/verify.py` | Проверка технической согласованности |
 
-All Git authors/committers are the research reconstruction identity. Real politicians did not make these commits. Metadata distinguishes signatory/issuing president from bill initiative; unknown initiators are explicitly marked. Attribution of every individual clause to its original human drafter is **unfinished**. A signatory is not necessarily the author. Individual 2020 contributions require legislative dossier research, including amendments introduced after the presidential bill.
+Сводный файл и файлы глав дублируют одни и те же нормы. Для подсчёта изменений используйте только `chapters/`, чтобы не учитывать текст дважды.
 
-Dates encode text-change/formation/publication dates where identified. Early decrees sometimes use instrument dates and are marked pending effective-date verification in each PR. Git dates are synthetic noon timestamps, not archival timestamps. Initial baseline adopted 12 December 1993, effective 25 December.
+## Как трактуется авторство
 
-## Text and provenance
+Необходимо различать:
 
-`CONSTITUTION.md` is a generated combined text; `chapters/` contains the same text split by chapter. Count only chapter files when measuring legal changes to avoid double counting. Five inserted article numbers use decimal plain-text notation (67.1 etc.); superscript paragraph/letter labels are also normalized to decimal notation. Typography, blank lines, footnotes, and link markup have been normalized.
+1. автора конкретной формулировки;
+2. субъекта законодательной инициативы;
+3. участника, предложившего изменение при рассмотрении законопроекта;
+4. лицо, подписавшее принятый акт.
 
-Transcriptions were retrieved from Russian Wikisource on 21 October 2026. Files under `sources/` preserve raw wikitext used in the experiment; they are secondary transcriptions, not primary promulgation records. The 1993 baseline is reconstructed by reversing later changes, not taken from a certified scan. The original snapshot `rev_1478` has known typographical problems and is retained for provenance, not treated as authoritative. Article 46 and punctuation normalization follow the later consolidated transcription. Source transcriptions can themselves contain errors.
+Подписание закона не доказывает авторство всех его положений. В метаданных указаны известные роли; непроверенные сведения об инициаторах отмечены отдельно. Полная привязка каждой нормы к её первоначальному автору **пока не выполнена**.
 
-See `SOURCES.md` for URLs and `METHODOLOGY.md` for review limits. Primary-source and legislative-dossier verification is needed before using this as a legal database.
+Все Git-коммиты созданы от исследовательской учётной записи. Даты и время коммитов синтетические: они служат для представления хронологии и не являются архивными данными о действиях исторических лиц.
 
-## Territorial status
+## Модель изменений
 
-Article 65 insertions describe the Russian domestic text only. They do not endorse Russia's territorial claims. Crimea, Sevastopol, and the four Ukrainian regions claimed in 2022 are internationally recognized as parts of Ukraine. Consult UN General Assembly resolutions 68/262 and ES-11/4, linked in SOURCES.md.
+Пакет 2020 года представлен одним PR с изменениями отдельных статей внутри него, а не последовательностью якобы независимо принятых поправок. Его особая процедура отмечена отдельно.
 
-## Verification
+Четыре акта 2022 года расположены по номерам законов для удобства изучения. Это не утверждение о существовании четырёх последовательно опубликованных промежуточных редакций Конституции.
 
-Run `python3 tools/verify.py`. This checks branch/merge counts and that stored article diffs match actual Git chapter changes. These are engineering consistency checks, **not legal certification**.
+Даты подписания, опубликования, вступления в силу и начала применения могут различаться. Для части ранних указов использована дата акта; необходимость проверки даты вступления в силу указана в описании PR. Для объединений субъектов использованы даты их образования.
+
+Слияние ветки — лишь способ визуализации изменения текста. Оно не удостоверяет соблюдение конституционной процедуры или юридическую действительность изменения.
+
+## Качество текста и источников
+
+Исходная редакция 1993 года восстановлена путём обратного применения последующих изменений, а не переписана с заверенного экземпляра официальной публикации. Её необходимо постатейно сверить с первоначальным опубликованным текстом.
+
+Исходные материалы — вторичные транскрипции русской Викитеки. В них возможны ошибки. Сохранённые файлы не заменяют официальные публикации актов и материалы законодательных дел.
+
+Типографика и разметка нормализованы: удалены ссылки и примечания, унифицированы пробелы и абзацы. Добавленные номера статей и надстрочные обозначения переданы десятичной записью, например `67.1`. Поэтому различия в Git не следует считать точной факсимильной передачей официальных публикаций.
+
+## Территориальные положения
+
+Изменения статьи 65 в 2014 и 2022 годах отражают содержание российского внутреннего конституционного текста, а не признание территориальных притязаний России. Крым, Севастополь и четыре украинских региона, на которые Россия заявила притязания в 2022 году, международно признаны частями Украины. Ссылки на резолюции Генеральной Ассамблеи ООН 68/262 и ES-11/4 приведены в `SOURCES.md`.
+
+## Проверка
+
+```bash
+python3 tools/verify.py
+```
+
+Скрипт проверяет наличие 20 веток, двух родителей у коммитов слияния, соответствие сохранённых текстов снимкам Git и количество статей. **Это техническая проверка, а не юридическая экспертиза или подтверждение полноты источников.**
+
+## Следующие шаги
+
+- Сверить исходную редакцию и все изменения с официальными публикациями.
+- Разделить даты подписания, опубликования, вступления в силу и применения в машиночитаемых данных.
+- Получить карточки законопроектов, таблицы поправок и сведения об инициаторах.
+- Установить авторство отдельных формулировок, особенно внутри пакета 2020 года.
+- Проверить полноту истории после 2022 года.
